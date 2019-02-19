@@ -1,5 +1,6 @@
-package com.sample.test_posts_app.domain
+package com.sample.test_posts_app.presentation.feed
 
+import com.sample.test_posts_app.domain.Post
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.test_posts_app.R
-import com.sample.test_posts_app.domain.DummyGetPostsUseCase
 import com.sample.test_posts_app.domain.Post
 import kotlinx.android.synthetic.main.feed_item.view.*
 import kotlinx.android.synthetic.main.fragment_home_feed.*

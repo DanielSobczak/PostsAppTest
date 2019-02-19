@@ -1,6 +1,5 @@
 package com.sample.test_posts_app.presentation.feed
 
-import com.sample.test_posts_app.domain.GetPostsUseCase
 import com.sample.test_posts_app.domain.Post
 import com.ww.roxie.BaseAction
 import com.ww.roxie.BaseState
