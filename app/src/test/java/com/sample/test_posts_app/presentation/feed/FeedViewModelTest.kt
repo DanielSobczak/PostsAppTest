@@ -1,10 +1,10 @@
-package com.sample.test_posts_app.feed.presentation
+package com.sample.test_posts_app.presentation.feed
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.*
-import com.sample.test_posts_app.feed.domain.GetPostsUseCase
-import com.sample.test_posts_app.feed.domain.Post
+import com.sample.test_posts_app.domain.GetPostsUseCase
+import com.sample.test_posts_app.domain.Post
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before

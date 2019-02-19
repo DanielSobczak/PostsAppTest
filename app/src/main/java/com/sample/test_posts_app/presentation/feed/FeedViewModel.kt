@@ -1,7 +1,7 @@
-package com.sample.test_posts_app.feed.presentation
+package com.sample.test_posts_app.presentation.feed
 
-import com.sample.test_posts_app.feed.domain.GetPostsUseCase
-import com.sample.test_posts_app.feed.domain.Post
+import com.sample.test_posts_app.domain.GetPostsUseCase
+import com.sample.test_posts_app.domain.Post
 import com.ww.roxie.BaseAction
 import com.ww.roxie.BaseState
 import com.ww.roxie.BaseViewModel

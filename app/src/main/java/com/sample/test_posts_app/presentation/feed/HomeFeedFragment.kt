@@ -1,4 +1,4 @@
-package com.sample.test_posts_app.feed.presentation
+package com.sample.test_posts_app.presentation.feed
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.test_posts_app.R
-import com.sample.test_posts_app.feed.domain.DummyGetPostsUseCase
-import com.sample.test_posts_app.feed.domain.Post
+import com.sample.test_posts_app.domain.DummyGetPostsUseCase
+import com.sample.test_posts_app.domain.Post
 import kotlinx.android.synthetic.main.feed_item.view.*
 import kotlinx.android.synthetic.main.fragment_home_feed.*
 

@@ -1,4 +1,4 @@
-package com.sample.test_posts_app.feed.domain
+package com.sample.test_posts_app.domain
 
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit

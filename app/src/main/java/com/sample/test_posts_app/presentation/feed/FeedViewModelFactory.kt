@@ -1,8 +1,8 @@
-package com.sample.test_posts_app.feed.presentation
+package com.sample.test_posts_app.presentation.feed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sample.test_posts_app.feed.domain.GetPostsUseCase
+import com.sample.test_posts_app.domain.GetPostsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFeedFragment">
     <fragment
         android:id="@+id/homeFeedFragment"
-        android:name="com.sample.test_posts_app.feed.presentation.HomeFeedFragment"
+        android:name="com.sample.test_posts_app.presentation.feed.HomeFeedFragment"
         android:label="HomeFeedFragment"
         tools:layout="@layout/fragment_home_feed" />
 </navigation>

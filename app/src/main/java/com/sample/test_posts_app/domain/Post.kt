@@ -1,4 +1,4 @@
-package com.sample.test_posts_app.feed.domain
+package com.sample.test_posts_app.domain
 
 data class Post(
     val id: Int,
