@@ -17,5 +17,9 @@
         android:id="@+id/postDetailFragment"
         android:name="com.sample.test_posts_app.presentation.postDetail.PostDetailFragment"
         android:label="PostDetailFragment"
-        tools:layout="@layout/fragment_post_detail" />
+        tools:layout="@layout/fragment_post_detail" >
+        <argument
+            android:name="postId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
