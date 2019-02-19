@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestPostsApp</string>
+    <string name="feed_loading_error_message">Something when wrong, check your internet connection and try again.</string>
 </resources>
