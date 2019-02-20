@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.test_posts_app.R
+import com.sample.test_posts_app.di.DaggerFeedComponent
+import com.sample.test_posts_app.di.appComponent
 import com.sample.test_posts_app.domain.Post
 import kotlinx.android.synthetic.main.feed_item.view.*
 import kotlinx.android.synthetic.main.fragment_home_feed.*
@@ -28,13 +30,19 @@ class HomeFeedFragment : Fragment() {
         feedList.layoutManager = LinearLayoutManager(context)
         feedList.adapter = feedAdapter
 
-        //TODO implement Dagger to provide factory
-        viewModel = ViewModelProviders.of(this, FeedViewModelFactory(null, DummyGetPostsUseCase()))
+        viewModel = ViewModelProviders.of(this, obtainVMFactory())
             .get(FeedViewModel::class.java)
 
         viewModel.observableState.observe(this, Observer { state -> state?.let { render(state) } })
 
         viewModel.dispatch(Action.LoadFeed)
+    }
+
+    private fun obtainVMFactory(): FeedViewModelFactory {
+        return DaggerFeedComponent.builder()
+            .appComponent(appComponent)
+            .build()
+            .provideFeedViewModelFactory()
     }
 
     private fun render(state: State) {

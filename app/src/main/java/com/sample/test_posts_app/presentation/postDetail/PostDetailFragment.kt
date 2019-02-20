@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sample.test_posts_app.R
-import com.sample.test_posts_app.presentation.feed.DummyGetPostsUseCase
+import com.sample.test_posts_app.di.DaggerFeedComponent
+import com.sample.test_posts_app.di.appComponent
 import kotlinx.android.synthetic.main.fragment_post_detail.*
 
 class PostDetailFragment : Fragment() {
@@ -21,15 +22,20 @@ class PostDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(
-            this,
-            PostDetailViewModelFactory(null, DummyGetPostsUseCase(), DummyCommentsUseCaseImpl(), DummyGetUserUseCase())
-        ).get(PostDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, obtainVMFactory())
+            .get(PostDetailViewModel::class.java)
 
         viewModel.observableState.observe(this, Observer { state -> state?.let { render(state) } })
 
         val postDetailFragmentArgs = PostDetailFragmentArgs.fromBundle(arguments!!)
         viewModel.dispatch(Action.LoadPostDetails(postDetailFragmentArgs.postId))
+    }
+
+    private fun obtainVMFactory(): PostDetailViewModelFactory {
+        return DaggerFeedComponent.builder()
+            .appComponent(appComponent)
+            .build()
+            .providePostDetailViewModelFactory()
     }
 
     private fun render(state: State) {
