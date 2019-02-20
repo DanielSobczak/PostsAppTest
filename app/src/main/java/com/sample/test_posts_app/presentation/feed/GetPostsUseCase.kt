@@ -10,16 +10,14 @@ interface GetPostsUseCase {
 }
 
 class DummyGetPostsUseCase : GetPostsUseCase {
-    override fun getPost(postId: Int): Single<Post> = Single.just(
-        Post(1, "another one", "with even longer body", 1234)
-    )
+    override fun getPost(postId: Int): Single<Post> = getAllPosts().map { it.find { post -> post.id == postId } }
 
     override fun getAllPosts(): Single<List<Post>> = Single.just(
         listOf(
             Post(1, "this is title", "my body", 1234),
-            Post(1, "another one", "with even longer body", 1234),
-            Post(1, "this is title", "Lorem ipsum solor del", 1234),
-            Post(1, "this is last title 4", "my body is ready", 1234)
+            Post(2, "another one", "with even longer body", 1234),
+            Post(3, "this is title", "Lorem ipsum solor del", 1234),
+            Post(4, "this is last title 4", "my body is ready", 1234)
         )
-    ).delay(2, TimeUnit.SECONDS)
+    ).delay(1, TimeUnit.SECONDS)
 }
