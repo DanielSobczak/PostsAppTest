@@ -43,14 +43,20 @@ class PostDetailFragment : Fragment() {
     }
 
     private fun renderLoadingState() {
-        //TODO
+        postDetailsContentGroup.visibility = View.GONE
+        postDetailsErrorMessage.visibility = View.GONE
+        postDetailsSpinner.visibility = View.VISIBLE
     }
 
     private fun renderErrorState() {
-        //TODO
+        postDetailsContentGroup.visibility = View.GONE
+        postDetailsSpinner.visibility = View.GONE
+        postDetailsErrorMessage.text = getString(R.string.post_details_loading_error_message)
     }
 
     private fun renderPosts(posts: PostDetailsModel?) {
+        postDetailsContentGroup.visibility = View.VISIBLE
+        postDetailsSpinner.visibility = View.GONE
         posts?.let {
             postTitle.text = posts.title
             postBody.text = posts.body
