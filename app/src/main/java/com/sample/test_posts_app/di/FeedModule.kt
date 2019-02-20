@@ -1,7 +1,12 @@
 package com.sample.test_posts_app.di
 
-import com.sample.test_posts_app.presentation.feed.DummyGetPostsUseCase
+import com.sample.test_posts_app.data.CommentsRepository
+import com.sample.test_posts_app.data.PostsRepository
+import com.sample.test_posts_app.data.UsersRepository
+import com.sample.test_posts_app.data.api.FeedApiDefinition
+import com.sample.test_posts_app.data.api.FeedApiService
 import com.sample.test_posts_app.presentation.feed.FeedViewModelFactory
+import com.sample.test_posts_app.presentation.feed.GetPostUseCaseImpl
 import com.sample.test_posts_app.presentation.feed.GetPostsUseCase
 import com.sample.test_posts_app.presentation.postDetail.*
 import dagger.Module
@@ -12,30 +17,41 @@ object FeedModule {
 
     @Provides
     @JvmStatic
-    fun provideUserUseCase(): GetUserUseCase = DummyGetUserUseCase()
+    fun provideFeedAPIService(feedApiDefinition: FeedApiDefinition) = FeedApiService(feedApiDefinition)
 
     @Provides
     @JvmStatic
-    fun providePostUseCase(): GetPostsUseCase = DummyGetPostsUseCase()
+    fun provideUserUseCase(feedApiService: FeedApiService): GetUserUseCase =
+        GetUserUseCaseImpl(UsersRepository(feedApiService))
 
     @Provides
     @JvmStatic
-    fun provideCommentsUseCase(): GetCommentsUseCase = DummyCommentsUseCaseImpl()
+    fun providePostUseCase(feedApiService: FeedApiService): GetPostsUseCase =
+        GetPostUseCaseImpl(PostsRepository(feedApiService))
 
     @Provides
     @JvmStatic
-    fun provideFeedVMFactory(): FeedViewModelFactory {
-        return FeedViewModelFactory(null, DummyGetPostsUseCase())
+    fun provideCommentsUseCase(feedApiService: FeedApiService): GetCommentsUseCase =
+        GetCommentsUseCaseImpl(CommentsRepository(feedApiService))
+
+    @Provides
+    @JvmStatic
+    fun provideFeedVMFactory(getPostsUseCase: GetPostsUseCase): FeedViewModelFactory {
+        return FeedViewModelFactory(null, getPostsUseCase)
     }
 
     @Provides
     @JvmStatic
-    fun providePostDetailsVMFactory(): PostDetailViewModelFactory {
+    fun providePostDetailsVMFactory(
+        getPostsUseCase: GetPostsUseCase,
+        getUserUseCase: GetUserUseCase,
+        getCommentsUseCase: GetCommentsUseCase
+    ): PostDetailViewModelFactory {
         return PostDetailViewModelFactory(
             null,
-            DummyGetPostsUseCase(),
-            DummyCommentsUseCaseImpl(),
-            DummyGetUserUseCase()
+            getPostsUseCase,
+            getCommentsUseCase,
+            getUserUseCase
         )
     }
 }
