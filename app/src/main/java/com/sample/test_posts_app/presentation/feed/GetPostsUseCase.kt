@@ -6,9 +6,14 @@ import java.util.concurrent.TimeUnit
 
 interface GetPostsUseCase {
     fun getAllPosts(): Single<List<Post>>
+    fun getPost(postId: Int): Single<Post>
 }
 
 class DummyGetPostsUseCase : GetPostsUseCase {
+    override fun getPost(postId: Int): Single<Post> = Single.just(
+        Post(1, "another one", "with even longer body", 1234)
+    )
+
     override fun getAllPosts(): Single<List<Post>> = Single.just(
         listOf(
             Post(1, "this is title", "my body", 1234),
