@@ -28,7 +28,8 @@ class PostDetailFragment : Fragment() {
 
         viewModel.observableState.observe(this, Observer { state -> state?.let { render(state) } })
 
-        viewModel.dispatch(Action.LoadPostDetails(1)) //TODO pass id through intent
+        val postDetailFragmentArgs = PostDetailFragmentArgs.fromBundle(arguments!!)
+        viewModel.dispatch(Action.LoadPostDetails(postDetailFragmentArgs.postId))
     }
 
     private fun render(state: State) {
