@@ -64,9 +64,7 @@ class PostDetailViewModelTest {
         given(mockGetUserUseCase.getUser(post.authorId)).willReturn(Single.just(user))
         given(mockGetCommentsUseCase.getCommentsFor(post)).willReturn(Single.just(comments))
 
-        sut.observableState.observeForever(mockObserver)
-        sut.dispatch(actionLoad)
-        testScheduler.triggerActions()
+        triggerLoadAction()
 
         inOrder(mockObserver) {
             verify(mockObserver).onChanged(loadingState)
@@ -80,14 +78,9 @@ class PostDetailViewModelTest {
         given(mockGetUserUseCase.getUser(post.authorId)).willReturn(Single.error(RuntimeException()))
         given(mockGetCommentsUseCase.getCommentsFor(post)).willReturn(Single.just(comments))
 
-        sut.observableState.observeForever(mockObserver)
-        sut.dispatch(actionLoad)
-        testScheduler.triggerActions()
+        triggerLoadAction()
 
-        inOrder(mockObserver) {
-            verify(mockObserver).onChanged(loadingState)
-            verify(mockObserver).onChanged(errorState)
-        }
+        assertLoadingAndErrorReceivedInOrder()
     }
 
     @Test
@@ -96,14 +89,9 @@ class PostDetailViewModelTest {
         given(mockGetUserUseCase.getUser(post.authorId)).willReturn(Single.just(user))
         given(mockGetCommentsUseCase.getCommentsFor(post)).willReturn(Single.error(RuntimeException()))
 
-        sut.observableState.observeForever(mockObserver)
-        sut.dispatch(actionLoad)
-        testScheduler.triggerActions()
+        triggerLoadAction()
 
-        inOrder(mockObserver) {
-            verify(mockObserver).onChanged(loadingState)
-            verify(mockObserver).onChanged(errorState)
-        }
+        assertLoadingAndErrorReceivedInOrder()
     }
 
     @Test
@@ -112,10 +100,18 @@ class PostDetailViewModelTest {
         given(mockGetUserUseCase.getUser(post.authorId)).willReturn(Single.just(user))
         given(mockGetCommentsUseCase.getCommentsFor(post)).willReturn(Single.just(comments))
 
+        triggerLoadAction()
+
+        assertLoadingAndErrorReceivedInOrder()
+    }
+
+    private fun triggerLoadAction() {
         sut.observableState.observeForever(mockObserver)
         sut.dispatch(actionLoad)
         testScheduler.triggerActions()
+    }
 
+    private fun assertLoadingAndErrorReceivedInOrder() {
         inOrder(mockObserver) {
             verify(mockObserver).onChanged(loadingState)
             verify(mockObserver).onChanged(errorState)
