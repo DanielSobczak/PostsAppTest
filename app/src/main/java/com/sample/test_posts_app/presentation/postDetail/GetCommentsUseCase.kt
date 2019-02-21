@@ -12,15 +12,7 @@ interface GetCommentsUseCase {
 class GetCommentsUseCaseImpl(
     private val commentsRepository: CommentsRepository
 ) : GetCommentsUseCase {
-    override fun getCommentsFor(post: Post): Single<List<Comment>> {
-        return commentsRepository.getComments(post)
-    }
+    override fun getCommentsFor(post: Post): Single<List<Comment>> = commentsRepository.getComments(post)
 
-}
-
-class DummyCommentsUseCaseImpl : GetCommentsUseCase {
-    override fun getCommentsFor(post: Post): Single<List<Comment>> {
-        return Single.just(listOf(Comment(1, 1, "a", "foo@bar.com")))
-    }
 }
 

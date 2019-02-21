@@ -3,7 +3,6 @@ package com.sample.test_posts_app.presentation.feed
 import com.sample.test_posts_app.data.PostsRepository
 import com.sample.test_posts_app.domain.Post
 import io.reactivex.Single
-import java.util.concurrent.TimeUnit
 
 interface GetPostsUseCase {
     fun getAllPosts(): Single<List<Post>>
@@ -14,25 +13,9 @@ class GetPostUseCaseImpl(
     private val postsRepository: PostsRepository
 ) : GetPostsUseCase {
 
-    override fun getAllPosts(): Single<List<Post>> {
-        return postsRepository.getPosts()
-    }
+    override fun getAllPosts(): Single<List<Post>> = postsRepository.getPosts()
 
     override fun getPost(postId: Int): Single<Post> {
         return getAllPosts().map { it.find { post -> post.id == postId } }
     }
-
-}
-
-class DummyGetPostsUseCase : GetPostsUseCase {
-    override fun getPost(postId: Int): Single<Post> = getAllPosts().map { it.find { post -> post.id == postId } }
-
-    override fun getAllPosts(): Single<List<Post>> = Single.just(
-        listOf(
-            Post(1, "this is title", "my body", 1234),
-            Post(2, "another one", "with even longer body", 1234),
-            Post(3, "this is title", "Lorem ipsum solor del", 1234),
-            Post(4, "this is last title 4", "my body is ready", 1234)
-        )
-    ).delay(1, TimeUnit.SECONDS)
 }
