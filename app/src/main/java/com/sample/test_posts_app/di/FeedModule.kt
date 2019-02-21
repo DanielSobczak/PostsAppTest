@@ -8,12 +8,15 @@ import com.sample.test_posts_app.data.api.FeedApiService
 import com.sample.test_posts_app.data.cache.CommentsStorage
 import com.sample.test_posts_app.data.cache.PostsStorage
 import com.sample.test_posts_app.data.cache.UsersStorage
-import com.sample.test_posts_app.presentation.feed.FeedViewModelFactory
+import com.sample.test_posts_app.presentation.feed.FeedViewModel
 import com.sample.test_posts_app.presentation.feed.GetPostUseCaseImpl
 import com.sample.test_posts_app.presentation.feed.GetPostsUseCase
 import com.sample.test_posts_app.presentation.postDetail.*
 import dagger.Module
 import dagger.Provides
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Provider
 
 @Module
 object FeedModule {
@@ -39,24 +42,39 @@ object FeedModule {
 
     @Provides
     @JvmStatic
-    fun provideFeedVMFactory(getPostsUseCase: GetPostsUseCase): FeedViewModelFactory {
-        return FeedViewModelFactory(null, getPostsUseCase)
-    }
-
-    @Provides
-    @JvmStatic
-    fun providePostDetailsVMFactory(
+    fun providePostDetailViewModel(
         getPostsUseCase: GetPostsUseCase,
         getUserUseCase: GetUserUseCase,
         getCommentsUseCase: GetCommentsUseCase
-    ): PostDetailViewModelFactory {
-        return PostDetailViewModelFactory(
+    ): PostDetailViewModel = PostDetailViewModel(
+        null,
+        getPostsUseCase,
+        getCommentsUseCase,
+        getUserUseCase,
+        Schedulers.io(),
+        AndroidSchedulers.mainThread()
+    )
+
+    @Provides
+    @JvmStatic
+    fun provideFeedViewModel(getPostsUseCase: GetPostsUseCase): FeedViewModel =
+        FeedViewModel(
             null,
             getPostsUseCase,
-            getCommentsUseCase,
-            getUserUseCase
+            Schedulers.io(),
+            AndroidSchedulers.mainThread()
         )
-    }
+
+    @Provides
+    @JvmStatic
+    fun provideFeedVMFactory(vmProvider: Provider<FeedViewModel>): ViewModelFactory<FeedViewModel> =
+        ViewModelFactory(vmProvider)
+
+    @Provides
+    @JvmStatic
+    fun providePostDetailsVMFactory(vmProvider: Provider<PostDetailViewModel>): ViewModelFactory<PostDetailViewModel> =
+        ViewModelFactory(vmProvider)
+
 }
 
 

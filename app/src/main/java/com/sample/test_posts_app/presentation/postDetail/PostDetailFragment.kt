@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sample.test_posts_app.R
 import com.sample.test_posts_app.di.DaggerFeedComponent
+import com.sample.test_posts_app.di.ViewModelFactory
 import com.sample.test_posts_app.di.appComponent
 import kotlinx.android.synthetic.main.fragment_post_detail.*
 
@@ -31,7 +32,7 @@ class PostDetailFragment : Fragment() {
         viewModel.dispatch(Action.LoadPostDetails(postDetailFragmentArgs.postId))
     }
 
-    private fun obtainVMFactory(): PostDetailViewModelFactory {
+    private fun obtainVMFactory(): ViewModelFactory<PostDetailViewModel> {
         return DaggerFeedComponent.builder()
             .appComponent(appComponent)
             .build()

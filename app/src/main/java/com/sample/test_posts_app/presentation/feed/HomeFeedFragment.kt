@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.test_posts_app.R
 import com.sample.test_posts_app.di.DaggerFeedComponent
+import com.sample.test_posts_app.di.ViewModelFactory
 import com.sample.test_posts_app.di.appComponent
 import com.sample.test_posts_app.domain.Post
 import kotlinx.android.synthetic.main.feed_item.view.*
@@ -38,7 +39,7 @@ class HomeFeedFragment : Fragment() {
         viewModel.dispatch(Action.LoadFeed)
     }
 
-    private fun obtainVMFactory(): FeedViewModelFactory {
+    private fun obtainVMFactory(): ViewModelFactory<FeedViewModel> {
         return DaggerFeedComponent.builder()
             .appComponent(appComponent)
             .build()
