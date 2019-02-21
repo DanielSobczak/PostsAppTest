@@ -20,4 +20,6 @@ class PostsRepository(
                     .doAfterSuccess { postsStorage.save(it) }
             }
         }
+
+    fun getPost(postId: Int): Single<Post> = getPosts().map { it.find { post -> post.id == postId } }
 }

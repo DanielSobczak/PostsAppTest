@@ -15,7 +15,5 @@ class GetPostUseCaseImpl(
 
     override fun getAllPosts(): Single<List<Post>> = postsRepository.getPosts()
 
-    override fun getPost(postId: Int): Single<Post> {
-        return getAllPosts().map { it.find { post -> post.id == postId } }
-    }
+    override fun getPost(postId: Int): Single<Post> = postsRepository.getPost(postId)
 }
